@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+# Define the report file name
+REPORT_FILE="$HOME/network_health_report.txt"
+
+# Redirect all standard output and errors into the report file automatically
+exec > >(tee -i "$REPORT_FILE") 2>&1
+
+# --------------------------------------- #
+
+
 # Network Health Check 
 
 echo "Network Health Check..."
@@ -10,7 +20,7 @@ hostname=$(hostname)
 currentUser=$(whoami)
 date=$(date)
 
-echo "Server Information >>"
+echo "Displaying server information..."
 echo "Hostname: $hostname"
 echo "Current user: $currentUser"
 echo "Date and Time: $date"
@@ -24,12 +34,10 @@ ip=$(hostname -I)
 gateway=$(ip route) 
 dns=$(resolvectl status)
 
-
-echo "Network Information >>"
+echo "Displaying network information..."
 echo "IP Address: $ip"
 echo "Default Gateway: $gateway"
 echo "DNS Server: $dns"
-
 
 echo "-----------------------------------"
 echo -e "\n"
@@ -47,7 +55,6 @@ else
 	echo "Internet connectivity: DOWN"
 fi
 
-
 echo "----------------------------------"
 echo -e "\n"
 
@@ -62,7 +69,6 @@ if [ $? -eq 0 ]; then
 else
 	echo "DNS Resolution: FAILED"
 fi
-
 
 echo "----------------------------------"
 echo -e "\n"
@@ -83,6 +89,5 @@ do
 		echo ">> $website is DOWN"
 	fi
 done
-
 
 
