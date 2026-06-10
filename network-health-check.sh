@@ -90,4 +90,7 @@ do
 	fi
 done
 
+echo -e "\n"
+echo "SCRIPT COMPLETE"
+echo "check home directory for $REPORT_FILE report file."
 
