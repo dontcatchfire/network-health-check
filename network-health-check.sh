@@ -30,8 +30,9 @@ echo "IP Address: $ip"
 echo "Default Gateway: $gateway"
 echo "DNS Server: $dns"
 
-echo -e "\n"
+
 echo "-----------------------------------"
+echo -e "\n"
 
 # 3. Check Internet Connectivity
 
@@ -46,11 +47,42 @@ else
 	echo "Internet connectivity: DOWN"
 fi
 
-echo -e "\n"
+
 echo "----------------------------------"
+echo -e "\n"
 
 # 4. Check DNS Resolution
 
+echo "Checking DNS Resolution..."
+
+dig google.com
+
+if [ $? -eq 0 ]; then
+	echo "DNS Resolution: WORKING"
+else
+	echo "DNS Resolution: FAILED"
+fi
+
+
+echo "----------------------------------"
+echo -e "\n"
+
+# 5. Check Website Availability
+
+echo "Checking if google.com, github.com and amazon.com are available..."
+
+for website in google.com github.com amazon.com
+do
+	ping -c 1 $website
+	#captures the output of 'ping' and stores in in 'status'
+	status=$?
+
+	if [ $status -eq 0 ]; then
+		echo ">> $website is UP"
+	else
+		echo ">> $website is DOWN"
+	fi
+done
 
 
 
